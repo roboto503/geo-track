@@ -1,9 +1,13 @@
 package com.roboto503.geotrack;
 
+import com.roboto503.geotrack.db.GeoTrackerLocation;
+import com.roboto503.geotrack.db.LocationsDataSource;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,12 +20,26 @@ public class MainMenu extends Activity implements OnClickListener {
 	Button stop; //stops tracking
 	Button locations; //launches locations activity
 	
+	//test code
+	//#######################
+	private LocationsDataSource ds;
+	//#######################
+	
 	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        
+        //initialize UI
+        initializeUI();
+        
+       ds = new LocationsDataSource(this);
+       ds.openDb();
+        
+        
+        
     }//onCreate
     
     //initializes UI items declared in main_menu.xml
@@ -41,11 +59,23 @@ public class MainMenu extends Activity implements OnClickListener {
     //Event handlers for the UI buttons
 	@Override
 	public void onClick(View v) {
+		//#######################
+		GeoTrackerLocation location = null;
+		//#######################
+		
 		// figure out which button was pressed
 		switch(v.getId()){
 		case R.id.main_menu_start_btn:
 			//check whether tracking is on or not
 			//if not, start tracking, otherwise tell user tracking is already on
+			
+			//#####################
+			String [] testLocation = {"this is longitude","this is latitude","this is geotag... bitch"};
+			location = ds.createLocation(testLocation[0], testLocation[1], testLocation[2]);
+			//#####################
+			
+			Toast.makeText(getApplicationContext(), "Location: " + testLocation[0] + " " + testLocation[1] + " " + testLocation[2] + " added to the database", Toast.LENGTH_SHORT).show();
+			
 			break;
 		case R.id.main_menu_stop_btn:
 			//check whether tracking is on or not
@@ -77,4 +107,18 @@ public class MainMenu extends Activity implements OnClickListener {
 		inflater.inflate(R.menu.menu, menu);
 		return true;
 	}//onCreateOptoinsMenu
+	
+	@Override
+	protected void onResume() {
+		//when resuming activity, we reopen the database
+		ds.openDb();
+		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		//when pausing the activity, we close database 
+		ds.closeDb();
+		super.onPause();
+	}
 }
