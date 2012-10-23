@@ -24,7 +24,7 @@ public class Locations extends ListActivity {
 	
 	//####################
 	private LocationsDataSource ds;
-	private List<GeoTrackerLocation> values;
+	private List<GeoTrackerLocation> dbLocationValues;
 	//####################
 	
 	@Override
@@ -32,12 +32,12 @@ public class Locations extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 		//###################
-		ds = new LocationsDataSource(this);
-		ds.openDb();
-		values = ds.getAllLocations();
+		ds = new LocationsDataSource(this); //database functionality
+		ds.openDb(); //opens database
+		dbLocationValues = ds.getAllLocations(); //gets a list of all location values stored in database
 		//###################
 		
-		ArrayList<Map<String, String>> list = createRows();
+		ArrayList<Map<String, String>> list = createRows(dbLocationValues); //Maps locations from the list in key pair values so they can later be printed for the listview
 		
 		String[] from = {"lonlat","geotag"};
 		int[] to = { R.id.lonlat, R.id.geotag };
@@ -47,17 +47,14 @@ public class Locations extends ListActivity {
 	
 	}//onCreate
 	
-	private ArrayList<Map<String, String>> createRows() {
+	private ArrayList<Map<String, String>> createRows(List<GeoTrackerLocation> listOfLocations) { //values
 		ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		
-		//TODO
-		//miten saa listasta values mapattua arvot listaan list?
-		
-		//loop through string tables of latlon and geotag
-		//for(int i=0; i < locations.length; i++){
-	    	//list.add(putData(locations[i], geotags[i]));
-	    //}//for
-		
+		// loops through given list of locations, and strips location's values (longitude, latitude and geotag) to the right places in row item using putData method 
+		for(GeoTrackerLocation location : listOfLocations){
+			list.add(putData(location.getLongitude()+location.getLatitude(), location.getGeotag()));
+		}//for
+
 	    return list;
 	}//createRows
 
@@ -67,6 +64,15 @@ public class Locations extends ListActivity {
 	    item.put("geotag", geotag);
 	    return item;
 	}//puData
+	
+	/*
+	private Map<String, String> putData(String lonlat, String geotag) {
+		HashMap<String, String> item = new HashMap<String, String>();
+	    item.put("lonlat", lonlat);
+	    item.put("geotag", geotag);
+	    return item;
+	}//puData
+	*/
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {

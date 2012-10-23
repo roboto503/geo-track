@@ -70,8 +70,8 @@ public class MainMenu extends Activity implements OnClickListener {
 			//if not, start tracking, otherwise tell user tracking is already on
 			
 			//#####################
-			String [] testLocation = {"this is longitude","this is latitude","this is geotag... bitch"};
-			location = ds.createLocation(testLocation[0], testLocation[1], testLocation[2]);
+			String [] testLocation = {"this is longitude","this is latitude","this is geotag... bitch"}; //testing database
+			location = ds.createLocation(testLocation[0], testLocation[1], testLocation[2]); //testing database
 			//#####################
 			
 			Toast.makeText(getApplicationContext(), "Location: " + testLocation[0] + " " + testLocation[1] + " " + testLocation[2] + " added to the database", Toast.LENGTH_SHORT).show();

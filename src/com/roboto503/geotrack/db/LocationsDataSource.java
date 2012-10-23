@@ -87,7 +87,7 @@ public class LocationsDataSource {
 		location.setId(cursor.getLong(0)); //the first index of the table is the id
 		location.setLongitude(cursor.getString(1)); //the second index of the table is the longitude
 		location.setLatitude(cursor.getString(2));//the third index of the table is the latitude
-		location.setGeotag(cursor.getString(3));//the fourth index of the table is the id
+		location.setGeotag(cursor.getString(3));//the fourth index of the table is the geotag
 		
 		return location;
 	}//cursorToLocation
