@@ -6,13 +6,16 @@
 
     <uses-sdk android:minSdkVersion="8" />
     <uses-library android:name="com.google.android.maps"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
             android:label="@string/app_name"
-            android:name=".Locations" >
+            android:name=".MainMenu" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".About" android:label="@string/about" android:theme="@android:style/Theme.Dialog"></activity>
-        <activity android:name=".MainMenu" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".Locations" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name=".Map" android:theme="@android:style/Theme.NoTitleBar"></activity>
     </application>
 

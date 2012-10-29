@@ -36,4 +36,16 @@
 	android:layout_marginTop="5dp"
 	android:layout_marginBottom="5dp"
 	android:text="@string/main_menu_locations_btn" />
+<TextView android:id="@+id/main_menu_lon"
+    android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="5dp"
+	android:text="@string/main_menu_longitude_ind" />
+<TextView android:id="@+id/main_menu_lat"
+    android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="5dp"
+	android:text="@string/main_menu_latitude_ind" />
 </LinearLayout>

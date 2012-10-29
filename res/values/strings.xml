@@ -10,6 +10,7 @@
     <string name="main_menu_locations_btn">Show Locations</string>
     <string name="about">About this app</string>
     <string name="about_text">GeoTrack lists user\u0027s locations while tracking is on and prints those locations on a map. Press Start Tracking button to start tracking and turn tracking off by pressing Stop Tracking button. To see locations printed on a map, first press Show Locations button and then select a location from the appearing list to print on a map.</string>
-       
+    <string name="main_menu_longitude_ind">Longitude: </string>
+    <string name="main_menu_latitude_ind">Latitude: </string>
 
 </resources>
