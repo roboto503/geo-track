@@ -2,9 +2,14 @@ package com.roboto503.geotrack;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -17,7 +22,7 @@ import java.util.Map;
 import com.roboto503.geotrack.db.GeoTrackerLocation;
 import com.roboto503.geotrack.db.LocationsDataSource;
 
-public class Locations extends ListActivity {
+public class Locations extends FragmentActivity {
 	
 	//String locations [] = {"lat:2 lon: 3","lat:4 lon: 5","lat:1 lon: 5","lat:8 lon: 8","lat:9 lon: 2","lat:2 lon: 4","lat:5 lon: 3"};
 	//String geotags [] = {"geotag 1","geotag 2","geotag 3","geotag 4","geotag 5","geotag 6","geotag 7"};
@@ -25,29 +30,41 @@ public class Locations extends ListActivity {
 	//####################
 	private LocationsDataSource ds;
 	private List<GeoTrackerLocation> dbLocationValues;
+	private ListView listView;
 	//####################
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.locations_list);
 		
-		//###################
+		listView = (ListView) findViewById(R.id.list);
+		
+		initializeListView();
+		
+		
+	}//onCreate
+	
+	private void initializeListView(){
+		//open database
 		ds = new LocationsDataSource(this); //database functionality
 		ds.openDb(); //opens database
 		dbLocationValues = ds.getAllLocations(); //gets a list of all location values stored in database
-		//###################
-		
+
+		//populate list
 		ArrayList<Map<String, String>> list = createRows(dbLocationValues); //Maps locations from the list in key pair values so they can later be printed for the listview
 		
 		String[] from = {"lonlat","geotag"};
 		int[] to = { R.id.lonlat, R.id.geotag };
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.locations_row, from, to);
-		setListAdapter(simpleAdapter);
 		
+		listView.setAdapter(simpleAdapter);
 	
 		//finally close database
 		ds.closeDb();
-	}//onCreate
+		
+		
+	}//initializeListView
 	
 	private ArrayList<Map<String, String>> createRows(List<GeoTrackerLocation> listOfLocations) { //values
 		ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
@@ -76,11 +93,12 @@ public class Locations extends ListActivity {
 	}//puData
 	*/
 
+	/*
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		//String item = (String) getListAdapter().getItem(position);
 		Toast.makeText(this,"selected " + id, Toast.LENGTH_SHORT).show();
 	}//onListItemClick
-
+	*/
 	
 }
