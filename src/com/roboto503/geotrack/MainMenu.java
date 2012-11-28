@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import com.roboto503.geotrack.db.GeoTrackerLocation;
 import com.roboto503.geotrack.db.LocationsDataSource;
+import com.roboto503.geotrack.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,6 +36,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	private Button start; //starts tracking
 	private Button stop; //stops tracking
 	private Button locations; //launches locations activity
+	private Button map; //launches map activity
 	private ImageView trackingIndicator; //icon to show whether tracking is on or off
 	private TextView lonInd; //indicator for received longitude updates
 	private TextView latInd; //indicator for received latitude updates
@@ -81,6 +83,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	start = (Button) findViewById(R.id.main_menu_start_btn);
     	stop = (Button) findViewById(R.id.main_menu_stop_btn);
     	locations = (Button) findViewById(R.id.main_menu_locations_btn);
+    	map = (Button) findViewById(R.id.main_menu_map_btn);
     	
     	trackingIndicator = (ImageView) findViewById(R.id.main_menu_pic);
     	lonInd = (TextView) findViewById(R.id.main_menu_lon);
@@ -93,6 +96,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	start.setOnClickListener(this);
     	stop.setOnClickListener(this);
     	locations.setOnClickListener(this);
+    	map.setOnClickListener(this);
     }//initializeUI
 
 
@@ -155,6 +159,10 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		case R.id.main_menu_locations_btn:
 			//launch locations activity
 			intent = new Intent(this, Locations.class);
+			startActivity(intent);
+			break;
+		case R.id.main_menu_map_btn:
+			intent = new Intent(this, Map.class);
 			startActivity(intent);
 			break;
 		}//switch	

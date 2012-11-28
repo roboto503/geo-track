@@ -45,6 +45,8 @@ public class Locations extends ListActivity {
 		setListAdapter(simpleAdapter);
 		
 	
+		//finally close database
+		ds.closeDb();
 	}//onCreate
 	
 	private ArrayList<Map<String, String>> createRows(List<GeoTrackerLocation> listOfLocations) { //values
@@ -52,7 +54,7 @@ public class Locations extends ListActivity {
 		
 		// loops through given list of locations, and strips location's values (longitude, latitude and geotag) to the right places in row item using putData method 
 		for(GeoTrackerLocation location : listOfLocations){
-			list.add(putData(location.getLongitude()+location.getLatitude(), location.getGeotag()));
+			list.add(putData("longitude: " + location.getLongitude() + " latitude: " + location.getLatitude(), location.getGeotag()));
 		}//for
 
 	    return list;
@@ -80,4 +82,5 @@ public class Locations extends ListActivity {
 		Toast.makeText(this,"selected " + id, Toast.LENGTH_SHORT).show();
 	}//onListItemClick
 
+	
 }
