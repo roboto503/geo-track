@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +41,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	private ImageView trackingIndicator; //icon to show whether tracking is on or off
 	private TextView lonInd; //indicator for received longitude updates
 	private TextView latInd; //indicator for received latitude updates
+	private TextView dateInd; 
 	
 	private static final int ACTIVATE_GPS_ALERT = 1; // constant for identifying dialog 
 	
@@ -58,12 +60,15 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	private LocationsDataSource ds;
 	//#######################
 	
+	private String date = "date";
 	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        
+        date = date();
         
         //initialize UI
         initializeUI();
@@ -88,9 +93,14 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	trackingIndicator = (ImageView) findViewById(R.id.main_menu_pic);
     	lonInd = (TextView) findViewById(R.id.main_menu_lon);
     	latInd = (TextView) findViewById(R.id.main_menu_lat);
+    	dateInd = (TextView) findViewById(R.id.main_menu_date);
     	
+    	//initialize text fields with default  
+    	lonInd.setText(R.string.main_menu_longitude_ind);
+	    latInd.setText(R.string.main_menu_latitude_ind);
+    	dateInd.setText(date);
     	
-    	trackingIndicator.setImageResource(R.drawable.ic_launcher_red);
+    	trackingIndicator.setImageResource(R.drawable.ic_launcher_yellow);
     	
     	//set onClick-listeners to buttons
     	start.setOnClickListener(this);
@@ -99,6 +109,21 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	map.setOnClickListener(this);
     }//initializeUI
 
+    private String date(){
+    	//get time for the date field of the location
+    	Time today = new Time(Time.getCurrentTimezone());
+    	today.setToNow();
+    	
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(getResources().getString(R.string.main_menu_date_ind));
+    	sb.append(today.monthDay);
+    	sb.append("/");
+    	sb.append(today.month);
+    	sb.append("/");
+    	sb.append(today.year);
+    	Log.i("DATE", sb.toString());
+    	return sb.toString();
+    }
 
     private void initializeGPS(){
     	locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -108,6 +133,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	    if(!locManager.isProviderEnabled(provider)){
 	    	onCreateDialog(ACTIVATE_GPS_ALERT);
 	    }
+	    trackingIndicator.setImageResource(R.drawable.ic_launcher);
     }//initializeGPS
     
     //Event handlers for the UI buttons
@@ -125,8 +151,8 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 			    locManager.requestLocationUpdates(provider, minTime, minDistance, this);
 			    Location location = locManager.getLastKnownLocation(provider);
 			    
-			    lonInd.setText(R.string.main_menu_longitude_ind + String.valueOf(decFormat.format(location.getLongitude())));
-			    latInd.setText(R.string.main_menu_longitude_ind + String.valueOf(decFormat.format(location.getLatitude())));
+			    //lonInd.setText(R.string.main_menu_longitude_ind + String.valueOf(decFormat.format(location.getLongitude())));
+			    //latInd.setText(R.string.main_menu_longitude_ind + String.valueOf(decFormat.format(location.getLatitude())));
 			    isEnabled = true;
 			    trackingIndicator.setImageResource(R.drawable.ic_launcher);
 			}else{
@@ -215,13 +241,13 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		lonInd.setText(R.string.main_menu_longitude_ind + String.valueOf(decFormat.format(location.getLongitude())));
-	    latInd.setText(R.string.main_menu_latitude_ind + String.valueOf(decFormat.format(location.getLatitude())));
 	    //insert location into the database
-	    ds.createLocation(String.valueOf(decFormat.format(location.getLongitude())), String.valueOf(decFormat.format(location.getLatitude())), "geotag");
+	    ds.createLocation(String.valueOf(location.getLongitude()), String.valueOf(location.getLatitude()), date);
+	    //ds.createLocation(String.valueOf(decFormat.format(location.getLongitude())), String.valueOf(decFormat.format(location.getLatitude())), date);
 		//Toast.makeText(this, "lon: " + String.valueOf(location.getLongitude()) + " lat: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
-	    
+	    lonInd.setText(getResources().getString(R.string.main_menu_longitude_ind) + decFormat.format(location.getLongitude()));
+	    latInd.setText(getResources().getString(R.string.main_menu_latitude_ind) + decFormat.format(location.getLatitude()));
+	    Log.i("longitude", String.valueOf(decFormat.format(location.getLongitude())));
 	}
 
 	@Override

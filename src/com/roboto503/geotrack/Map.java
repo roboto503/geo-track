@@ -45,7 +45,10 @@ public class Map extends MapActivity {
 		for(GeoTrackerLocation location : listOfLocations){
 			//list.add(putData("longitude: " + location.getLongitude() + " latitude: " + location.getLatitude(), location.getGeotag()));
 			// creates a new GeoPoint by getting the longitude and latitude from location's parsed string. The parse must be multiplied with 1E6 because constructor of GeoPointproduct accepts longitude and latitude in microdegrees (degrees * 1E6). 
-			GeoPoint point = new GeoPoint((int) (Float.parseFloat(location.getLongitude()) * 1E6), (int) (Float.parseFloat(location.getLatitude()) * 1E6));
+			//GeoPoint point = new GeoPoint((int) (Float.parseFloat(location.getLongitude()) * 1E6), (int) (Float.parseFloat(location.getLatitude()) * 1E6));
+			//GeoPoint point = new GeoPoint((int) (Float.parseFloat(location.getLongitude())), (int) (Float.parseFloat(location.getLatitude())));
+			//GeoPoint point = new GeoPoint((int) (Double.parseDouble(location.getLongitude()) * 1e6), (int) (Double.parseDouble(location.getLatitude()) * 1e6));
+			GeoPoint point = new GeoPoint((int) (Double.parseDouble(location.getLatitude()) * 1e6), (int) (Double.parseDouble(location.getLongitude()) * 1e6));
 			Log.i("GEOPOINT", String.valueOf(point.getLatitudeE6()) + " " + String.valueOf(point.getLongitudeE6()));
 			OverlayItem overlayItem = new OverlayItem(point, "", "");
 			gtOverlays.addOverlay(overlayItem);

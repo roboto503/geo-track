@@ -10,6 +10,8 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -22,7 +24,7 @@ import java.util.Map;
 import com.roboto503.geotrack.db.GeoTrackerLocation;
 import com.roboto503.geotrack.db.LocationsDataSource;
 
-public class Locations extends FragmentActivity {
+public class Locations extends FragmentActivity{
 	
 	//String locations [] = {"lat:2 lon: 3","lat:4 lon: 5","lat:1 lon: 5","lat:8 lon: 8","lat:9 lon: 2","lat:2 lon: 4","lat:5 lon: 3"};
 	//String geotags [] = {"geotag 1","geotag 2","geotag 3","geotag 4","geotag 5","geotag 6","geotag 7"};
@@ -59,6 +61,15 @@ public class Locations extends FragmentActivity {
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.locations_row, from, to);
 		
 		listView.setAdapter(simpleAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "Yeah Buddy!!!" + arg3, Toast.LENGTH_SHORT).show();
+			}
+		});
 	
 		//finally close database
 		ds.closeDb();
@@ -69,9 +80,9 @@ public class Locations extends FragmentActivity {
 	private ArrayList<Map<String, String>> createRows(List<GeoTrackerLocation> listOfLocations) { //values
 		ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		
-		// loops through given list of locations, and strips location's values (longitude, latitude and geotag) to the right places in row item using putData method 
+		// loops through given list of locations, and strips location's values (longitude, latitude and date) to the right places in row item using putData method 
 		for(GeoTrackerLocation location : listOfLocations){
-			list.add(putData("longitude: " + location.getLongitude() + " latitude: " + location.getLatitude(), location.getGeotag()));
+			list.add(putData("longitude: " + location.getLongitude() + " latitude: " + location.getLatitude(), location.getDate()));
 		}//for
 
 	    return list;
@@ -99,6 +110,7 @@ public class Locations extends FragmentActivity {
 		//String item = (String) getListAdapter().getItem(position);
 		Toast.makeText(this,"selected " + id, Toast.LENGTH_SHORT).show();
 	}//onListItemClick
-	*/
+	 */
+	
 	
 }

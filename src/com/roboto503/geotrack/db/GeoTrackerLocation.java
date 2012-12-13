@@ -5,7 +5,7 @@ public class GeoTrackerLocation {
 	private long id;
 	private String longitude;
 	private String latitude;
-	private String geotag;
+	private String date;
 	
 	//accessor methods to get and set id, longitude, latitude and geotag
 	public long getId(){
@@ -32,12 +32,12 @@ public class GeoTrackerLocation {
 		this.latitude = latitude;
 	}//setLatitude
 	
-	public String getGeotag(){
-		return geotag;
+	public String getDate(){
+		return date;
 	}//getGeotag
 	
-	public void setGeotag(String geotag){
-		this.geotag = geotag;
+	public void setDate(String date){
+		this.date = date;
 	}//setGeotag
 	
 	

@@ -13,7 +13,7 @@ public class LocationsDataSource {
 	
 	private SQLiteDatabase db;
 	private DatabaseHelper dbHelper;
-	private String[] tableColumns = {DatabaseHelper.COLUMN_ID,DatabaseHelper.COLUMN_LON, DatabaseHelper.COLUMN_LAT, DatabaseHelper.COLUMN_GEOTAG};
+	private String[] tableColumns = {DatabaseHelper.COLUMN_ID,DatabaseHelper.COLUMN_LON, DatabaseHelper.COLUMN_LAT, DatabaseHelper.COLUMN_DATE};
 	
 	public LocationsDataSource(Context context){
 		//create new instance of dbHelper class
@@ -30,12 +30,12 @@ public class LocationsDataSource {
 		dbHelper.close();
 	}//closeDb
 	
-	public GeoTrackerLocation createLocation(String longitude, String latitude, String geotag){
-		//To create a new GeoTrackerLocation we need longitude, latitude and geotag. These are given as parameters. Let's put them in key-value -pairs before inserting them into database
+	public GeoTrackerLocation createLocation(String longitude, String latitude, String date){
+		//To create a new GeoTrackerLocation we need longitude, latitude and date. These are given as parameters. Let's put them in key-value -pairs before inserting them into database
 		ContentValues values = new ContentValues();
 		values.put(dbHelper.COLUMN_LON, longitude);
 		values.put(dbHelper.COLUMN_LAT, latitude);
-		values.put(dbHelper.COLUMN_GEOTAG, geotag);
+		values.put(dbHelper.COLUMN_DATE, date);
 		
 		//inserts a row in database and also assigns row value to the long id
 		long id = db.insert(dbHelper.TABLE_LOCATION, null, values);
@@ -87,7 +87,7 @@ public class LocationsDataSource {
 		location.setId(cursor.getLong(0)); //the first index of the table is the id
 		location.setLongitude(cursor.getString(1)); //the second index of the table is the longitude
 		location.setLatitude(cursor.getString(2));//the third index of the table is the latitude
-		location.setGeotag(cursor.getString(3));//the fourth index of the table is the geotag
+		location.setDate(cursor.getString(3));//the fourth index of the table is the date
 		
 		return location;
 	}//cursorToLocation
