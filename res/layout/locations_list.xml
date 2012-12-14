@@ -3,7 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+	<ImageView 
+	    android:id="@+id/locations_home_btn"
+	    android:layout_width="50dp"
+	    android:layout_height="50dp"
+	    android:src="@drawable/arrow"
+	    android:padding="5dp" />"
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"

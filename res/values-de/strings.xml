@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GeoTrack</string>
+    
+    
+    <string name="main_menu_start_btn">Jawohl!</string>
+    <string name="main_menu_stop_btn">Jawohl!</string>
+    <string name="main_menu_locations_btn">Jawohl!</string>
+    <string name="main_menu_map_btn">Jawohl!</string>
+    <string name="main_menu_longitude_ind">Jawohl!</string>
+    <string name="main_menu_latitude_ind">Jawohl!</string>
+    <string name="main_menu_date_ind">Jawohl!</string>
+    <string name="main_menu_tracking_on">Jawohl!</string>
+    <string name="main_menu_tracking_off">Jawohl!</string>
+    <string name="main_menu_tracking_enabled">Jawohl!</string>
+    <string name="main_menu_tracking_disabled">Jawohl!</string>
+    <string name="main_menu_gps_alert">Jawohl!</string>
+    
+    <string name="about">Jawohl!</string>
+    <string name="about_text">Jawohl! Jawohl!</string>
+    
+    <string name="pending">Jawohl...</string>
+    <string name="proceed">Jawohl!</string>
+    <string name="cancel">Jawohl!</string>
+    
+    <string name="show_on_map">Jawohl!</string>
+    <string name="delete">Jawohl!</string>
+    <string name="choose_operation">Jawohl!</string>
+    
+    <string name="locations_operations_alert">Jawohl!</string>
+    <string name="locations_delete_alert">Jawohl!</string>
+    
+    <string name="database_location_created">Jawohl!</string>
+    <string name="database_location_deleted">Jawohl!</string>
+    <string name="operation_cancelled">Jawohl!</string>
+    <string name="operation_failed">Jawohl!</string>
+
+</resources>

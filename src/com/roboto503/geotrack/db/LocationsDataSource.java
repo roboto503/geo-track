@@ -52,6 +52,10 @@ public class LocationsDataSource {
 		return newLocation;
 	}// createLocation
 	
+	public void deleteLocation(long id){
+		db.delete(dbHelper.TABLE_LOCATION, dbHelper.COLUMN_ID + " = " + id , null); // t‰ss‰ saattaa m‰tt‰‰ jokin
+	}//deleteLocation
+	
 	public void deleteLocation(GeoTrackerLocation location){
 		//id to figure out which location is going to be deleted
 		long id = location.getId();

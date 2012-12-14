@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<ImageView
+	android:id="@+id/main_menu_pic"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="10dp"
+	android:src="@drawable/ic_launcher"
+	android:layout_gravity="center_horizontal" />
+
+<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="50dp"
+	android:padding="10dp"
+	android:gravity="center">
+<TextView
+	android:id="@+id/main_menu_lon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:text="@string/main_menu_longitude_ind"
+	android:gravity="left"
+	android:layout_weight="1"
+	android:layout_gravity="center_horizontal" />
+<TextView
+	android:id="@+id/main_menu_lat"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:text="@string/main_menu_latitude_ind"
+	android:gravity="left"
+	android:layout_weight="1"
+	android:layout_gravity="center_horizontal" />
+<TextView
+	android:id="@+id/main_menu_date"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:text="@string/main_menu_date_ind"
+	android:layout_weight="1"
+	android:layout_gravity="center_horizontal" />
+</LinearLayout>
+
+<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="65dp"
+	android:padding="10dp"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal">
+<Button
+	android:id="@+id/main_menu_start_btn"
+	android:layout_width="60dp"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:text="@string/main_menu_start_btn"
+	android:layout_weight="1"
+	android:layout_gravity="center_horizontal" />
+<Button
+	android:id="@+id/main_menu_stop_btn"
+	android:layout_width="60dp"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:text="@string/main_menu_stop_btn"
+	android:layout_weight="1"
+	android:layout_gravity="center_horizontal" />
+</LinearLayout>
+
+<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="65dp"
+	android:padding="10dp"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal">
+<Button
+	android:id="@+id/main_menu_locations_btn"
+	android:layout_width="60dp"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:text="@string/main_menu_locations_btn"
+	android:layout_weight="1"
+	android:layout_gravity="center_horizontal" />
+<Button
+	android:id="@+id/main_menu_map_btn"
+	android:layout_width="60dp"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:text="@string/main_menu_map_btn"
+	android:layout_weight="1" />
+</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="location_functions">
+        <item>@string/show_on_map</item>
+        <item>@string/delete</item>
+        <item>@string/cancel</item>
+    </array>
+
+    
+</resources>

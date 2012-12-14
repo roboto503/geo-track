@@ -41,7 +41,8 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	private ImageView trackingIndicator; //icon to show whether tracking is on or off
 	private TextView lonInd; //indicator for received longitude updates
 	private TextView latInd; //indicator for received latitude updates
-	private TextView dateInd; 
+	private TextView dateInd; //indicator for current date
+	private String date = "date";
 	
 	private static final int ACTIVATE_GPS_ALERT = 1; // constant for identifying dialog 
 	
@@ -53,14 +54,9 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	private float minDistance = 5.0f; //update distance interval in meters
 	private DecimalFormat decFormat = new DecimalFormat("#.###"); //DecimalFormat for location's longitude & latitude. We only need three decimals. 
 	
-	
-	//test code
-	//#######################
-	//Database to store locations
+	//database
 	private LocationsDataSource ds;
-	//#######################
-	
-	private String date = "date";
+
 	
 	/** Called when the activity is first created. */
     @Override
@@ -68,6 +64,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
         
+        //initialize date
         date = date();
         
         //initialize UI
@@ -82,7 +79,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
         
     }//onCreate
     
-    //initializes UI items declared in main_menu.xml
+    /** initializes UI items declared in main_menu.xml*/
     public void initializeUI(){
     	//find buttons from layout main_menu layout view
     	start = (Button) findViewById(R.id.main_menu_start_btn);
@@ -90,25 +87,26 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	locations = (Button) findViewById(R.id.main_menu_locations_btn);
     	map = (Button) findViewById(R.id.main_menu_map_btn);
     	
+    	//initialize indicators
     	trackingIndicator = (ImageView) findViewById(R.id.main_menu_pic);
     	lonInd = (TextView) findViewById(R.id.main_menu_lon);
     	latInd = (TextView) findViewById(R.id.main_menu_lat);
     	dateInd = (TextView) findViewById(R.id.main_menu_date);
     	
-    	//initialize text fields with default  
+    	//initialize indicators with default values  
     	lonInd.setText(R.string.main_menu_longitude_ind);
 	    latInd.setText(R.string.main_menu_latitude_ind);
     	dateInd.setText(date);
-    	
     	trackingIndicator.setImageResource(R.drawable.ic_launcher_yellow);
     	
-    	//set onClick-listeners to buttons
+    	//set onClick-listeners to buttons. Because this class implements onClicListener class, we can use this pointer
     	start.setOnClickListener(this);
     	stop.setOnClickListener(this);
     	locations.setOnClickListener(this);
     	map.setOnClickListener(this);
     }//initializeUI
 
+    /** */
     private String date(){
     	//get time for the date field of the location
     	Time today = new Time(Time.getCurrentTimezone());
@@ -125,6 +123,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	return sb.toString();
     }
 
+    /** */
     private void initializeGPS(){
     	locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	    Criteria criteria = new Criteria();
@@ -133,54 +132,22 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	    if(!locManager.isProviderEnabled(provider)){
 	    	onCreateDialog(ACTIVATE_GPS_ALERT);
 	    }
-	    trackingIndicator.setImageResource(R.drawable.ic_launcher);
+	    isEnabled=true;
+	    updateUI();
     }//initializeGPS
     
-    //Event handlers for the UI buttons
+    /**Event handlers for the UI buttons */
 	@Override
 	public void onClick(View v) {
-		//GeoTrackerLocation location = null;
 		Intent intent;
-		
 		// figure out which button was pressed
 		switch(v.getId()){
 		case R.id.main_menu_start_btn:
-			//check whether tracking is on or not
-			//if not, start tracking, otherwise tell user tracking is already on
-			if(!isEnabled){
-			    locManager.requestLocationUpdates(provider, minTime, minDistance, this);
-			    Location location = locManager.getLastKnownLocation(provider);
-			    
-			    //lonInd.setText(R.string.main_menu_longitude_ind + String.valueOf(decFormat.format(location.getLongitude())));
-			    //latInd.setText(R.string.main_menu_longitude_ind + String.valueOf(decFormat.format(location.getLatitude())));
-			    isEnabled = true;
-			    trackingIndicator.setImageResource(R.drawable.ic_launcher);
-			}else{
-				//inform user that the tracking is already set
-				Toast.makeText(this, "tracking is already enabled", Toast.LENGTH_SHORT).show();
-			}
-			
-			
-			/*
-			//#####################
-			String [] testLocation = {"this is longitude","this is latitude","this is geotag... bitch"}; //testing database
-			location = ds.createLocation(testLocation[0], testLocation[1], testLocation[2]); //testing database
-			//#####################
-			
-			Toast.makeText(getApplicationContext(), "Location: " + testLocation[0] + " " + testLocation[1] + " " + testLocation[2] + " added to the database", Toast.LENGTH_SHORT).show();
-			*/
-			
+			checkTrackingStatus();
 			break;
 		case R.id.main_menu_stop_btn:
-			//check whether tracking is on or not
-			//if yes, stop tracking, otherwise tell user tracking is already off
-			if(isEnabled){
-				locManager.removeUpdates(this);
-				isEnabled = false;
-				trackingIndicator.setImageResource(R.drawable.ic_launcher_red);
-			}else{
-				Toast.makeText(this, "Tracking is already turned off", Toast.LENGTH_SHORT).show();
-			}
+			//
+			checkTrackingStatus();
 			break;
 		case R.id.main_menu_locations_btn:
 			//launch locations activity
@@ -188,12 +155,42 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 			startActivity(intent);
 			break;
 		case R.id.main_menu_map_btn:
+			//launch map activity
 			intent = new Intent(this, Map.class);
 			startActivity(intent);
 			break;
 		}//switch	
 	}//onClick
 	
+	private void checkTrackingStatus(){
+		if(isEnabled){
+			//if tracking on, stop tracking, remove location updates and update UI
+			locManager.removeUpdates(this);
+			isEnabled = false;
+			updateUI();
+		}else{
+			//if tracking is off, stop tracking, start asking location updates and update UI
+			locManager.requestLocationUpdates(provider, minTime, minDistance, this);
+		    Location location = locManager.getLastKnownLocation(provider);
+		    isEnabled = true;
+		    updateUI();
+		}
+	}//checkTrackingStatus 
+	
+	/***/
+	private void updateUI(){
+		if(isEnabled){
+			stop.setEnabled(true);
+			start.setEnabled(false);
+			trackingIndicator.setImageResource(R.drawable.ic_launcher);
+		}else{
+		    stop.setEnabled(false);
+		    start.setEnabled(true);
+		    trackingIndicator.setImageResource(R.drawable.ic_launcher_red);
+		}
+	}//updateUI
+	
+	/** */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// which option in an options menu was selected 
@@ -207,7 +204,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		return super.onOptionsItemSelected(item);
 	}
 	
-	//create options menu (menu that pops up as you press menu button on the device) 
+	/** create options menu (menu that pops up as you press menu button on the device) */ 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -215,6 +212,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		return true;
 	}//onCreateOptoinsMenu
 	
+	/** */
 	@Override
 	protected void onResume() {
 		//when resuming activity, we reopen the database and request location updates
@@ -227,6 +225,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		isEnabled = true;
 	}
 	
+	/** */
 	@Override
 	protected void onPause() {
 		//when pausing the activity, we close database 
@@ -239,6 +238,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		isEnabled = false;
 	}
 
+	/** */
 	@Override
 	public void onLocationChanged(Location location) {
 	    //insert location into the database
@@ -254,50 +254,61 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 	public void onProviderDisabled(String provider) {
 		// 
 		Toast.makeText(this, "The provider is disabled: " + provider, Toast.LENGTH_SHORT).show();
-		
-	}
+	}//onProviderDisabled
 
 	@Override
 	public void onProviderEnabled(String provider) {
 		// let the user know that provider is enabled
 		Toast.makeText(this, "New provider is enabled: " + provider, Toast.LENGTH_SHORT).show();
-		
-	}
+	}//onProviderEnabled
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 		
-	}
+	}//onStatusChanged
 	
+	/** Dialogs to interact with the user*/
 	@Override
 	protected Dialog onCreateDialog(int id) {
+		//method variables
+		String alertMsg = "";
+		String continueLbl = getResources().getString(R.string.proceed);
+		String cancelLbl = getResources().getString(R.string.cancel);
+		
+		//Which dialog is started
 		switch(id){
+		//Dialog to ask user to enable gps 
 		case ACTIVATE_GPS_ALERT:
+			alertMsg = getResources().getString(R.string.main_menu_gps_alert);
+			
+			//creates a new dialog
 			Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("To receive locations the GPS must be turned on. Proceed?");
+			builder.setMessage(alertMsg);
 			builder.setCancelable(true);
-			builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-				
+			
+			//set buttons to the dialog, set OnClick event handlers to the buttons
+			builder.setPositiveButton(continueLbl, new DialogInterface.OnClickListener() {	
+				//OnClick handler for continue button in GPS dialog 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					//takes user to the settings to turn gps on
 					Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 					startActivity(intent);
-				}
+				}//onClick
 			});
-			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				
+			builder.setNegativeButton(cancelLbl, new DialogInterface.OnClickListener() {
+				//OnClick handler for cancel button in GPS dialog 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
 					return;
 				}
 			});
+			
+			//create the dialog and show it to the user
 			AlertDialog dialog = builder.create();
 			dialog.show();
 			break;
-		
 		}
 		return super.onCreateDialog(id);
 	}//onCreateDialog

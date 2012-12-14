@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, MainMenu!</string>
     <string name="app_name">GeoTrack</string>
-    
-    
+        
     <string name="main_menu_start_btn">Start Tracking</string>
     <string name="main_menu_stop_btn">Stop Tracking</string>
     <string name="main_menu_locations_btn">Show Locations</string>
     <string name="main_menu_map_btn">Show Map</string>
-    <string name="about">About this app</string>
-    <string name="about_text">GeoTrack lists user\u0027s locations while tracking is on and prints those locations on a map. Press Start Tracking button to start tracking and turn tracking off by pressing Stop Tracking button. To see locations printed on a map, first press Show Locations button and then select a location from the appearing list to print on a map.</string>
     <string name="main_menu_longitude_ind">Longitude: </string>
     <string name="main_menu_latitude_ind">Latitude: </string>
     <string name="main_menu_date_ind">Today is: </string>
+    <string name="main_menu_tracking_on">Tracking is already enabled!</string>
+    <string name="main_menu_tracking_off">Tracking is already turned off!</string>
+    <string name="main_menu_tracking_enabled">Tracking is enabled!</string>
+    <string name="main_menu_tracking_disabled">Tracking is disabled!</string>
+    <string name="main_menu_gps_alert">To receive locations the GPS must be turned on. Proceed?</string>
+    
+    <string name="about">About this app</string>
+    <string name="about_text">GeoTrack lists user\u0027s locations while tracking is on and prints those locations on a map. Press Start Tracking button to start tracking and turn tracking off by pressing Stop Tracking button. To browse through locations press Locations. To see locations printed on a map, press Show Map.</string>
     
     <string name="pending">pending...</string>
+    <string name="proceed">continue</string>
+    <string name="cancel">cancel</string>
+    
+    <string name="show_on_map">show location on map</string>
+    <string name="delete">delete</string>
+    
+    <string name="locations_operations_alert">choose operation</string>
+    <string name="locations_delete_alert">You are about to delete this location. Location will be deleted from database and cannot be retrieved</string>
+    
+    <string name="database_location_created">A new location added to the database</string>
+    <string name="database_location_deleted">Location deleted from database</string>
+    <string name="operation_cancelled">action cancelled</string>
+    <string name="operation_failed">operation failed...</string>
 
 </resources>

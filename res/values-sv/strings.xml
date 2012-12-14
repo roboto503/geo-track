@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MainMenu!</string>
+    <string name="app_name">GeoTrack</string>
+    
+    
+    <string name="main_menu_start_btn">Börja</string>
+    <string name="main_menu_stop_btn">Sluta</string>
+    <string name="main_menu_locations_btn">Titta</string>
+    <string name="main_menu_map_btn">Karta</string>
+    <string name="main_menu_longitude_ind">en Longitude: </string>
+    <string name="main_menu_latitude_ind">en Latitude: </string>
+    <string name="main_menu_date_ind">Idag är det: </string>
+    <string name="main_menu_tracking_on">det har börjat</string>
+    <string name="main_menu_tracking_off">det har inte börjat</string>
+    <string name="main_menu_tracking_enabled">Det är börjat</string>
+    <string name="main_menu_tracking_disabled">Det är inte börjat</string>
+    <string name="main_menu_gps_alert">För at börja du måste GPS? Fortsättä?</string>
+    
+    <string name="about">Om det har app</string>
+    <string name="about_text">juu...</string>
+    
+    <string name="pending">väntar...</string>
+    <string name="proceed">fortsättä</string>
+    <string name="cancel">cancel</string>
+    
+    <string name="show_on_map">kartta</string>
+    <string name="delete">delete</string>
+    
+    <string name="locations_operations_alert">välja operationen</string>
+    <string name="locations_delete_alert">Delete?</string>
+    
+    <string name="database_location_created">blob</string>
+    <string name="database_location_deleted">blob blob</string>
+    <string name="operation_cancelled">blobbeti blob</string>
+    <string name="operation_failed">blob...</string>
+
+</resources>
