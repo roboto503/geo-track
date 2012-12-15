@@ -11,25 +11,34 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class LocationsDataSource {
 	
-	private SQLiteDatabase db;
-	private DatabaseHelper dbHelper;
-	private String[] tableColumns = {DatabaseHelper.COLUMN_ID,DatabaseHelper.COLUMN_LON, DatabaseHelper.COLUMN_LAT, DatabaseHelper.COLUMN_DATE};
+	//database variables
+	private SQLiteDatabase db; //database
+	private DatabaseHelper dbHelper; //helper
+	private String[] tableColumns = {DatabaseHelper.COLUMN_ID,DatabaseHelper.COLUMN_LON, DatabaseHelper.COLUMN_LAT, DatabaseHelper.COLUMN_DATE}; //column names
 	
+	
+	/** constructor*/
 	public LocationsDataSource(Context context){
 		//create new instance of dbHelper class
 		dbHelper = new DatabaseHelper(context);
 	}//LocationsDataSource
 	
+	
+	/** opens the database*/
 	public void openDb() throws SQLException{
 		//open database using dbHelper class
 		db = dbHelper.getWritableDatabase();
 	}//openDb
 	
+	
+	/** closes the database*/
 	public void closeDb(){
 		//closes any open database
 		dbHelper.close();
 	}//closeDb
 	
+	
+	/** creates a new location item*/
 	public GeoTrackerLocation createLocation(String longitude, String latitude, String date){
 		//To create a new GeoTrackerLocation we need longitude, latitude and date. These are given as parameters. Let's put them in key-value -pairs before inserting them into database
 		ContentValues values = new ContentValues();
@@ -52,14 +61,18 @@ public class LocationsDataSource {
 		return newLocation;
 	}// createLocation
 	
+	
+	/** deletes a row from database using an id*/
 	public void deleteLocation(long id){
-		db.delete(dbHelper.TABLE_LOCATION, dbHelper.COLUMN_ID + " = " + id , null); // t‰ss‰ saattaa m‰tt‰‰ jokin
+		db.delete(dbHelper.TABLE_LOCATION, dbHelper.COLUMN_ID + " = " + id , null);
 	}//deleteLocation
 	
+	
+	/** deletes a row from database*/
 	public void deleteLocation(GeoTrackerLocation location){
 		//id to figure out which location is going to be deleted
 		long id = location.getId();
-		db.delete(dbHelper.TABLE_LOCATION, dbHelper.COLUMN_ID + " = " + id , null); // t‰ss‰ saattaa m‰tt‰‰ jokin
+		db.delete(dbHelper.TABLE_LOCATION, dbHelper.COLUMN_ID + " = " + id , null);
 	}//deleteLocation
 	
 	
@@ -84,8 +97,10 @@ public class LocationsDataSource {
 		cursor.close();
 		
 		return locations;
-	}
+	}//getAllLocations
 	
+	
+	/** creates location object by drawing variable fields from database*/
 	private GeoTrackerLocation cursorToLocation(Cursor cursor){
 		GeoTrackerLocation location = new GeoTrackerLocation();
 		location.setId(cursor.getLong(0)); //the first index of the table is the id

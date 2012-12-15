@@ -2,38 +2,41 @@
 <resources>
 
     <string name="app_name">GeoTrack</string>
+        
+    <!-- strings used in main menu -->
+    <string name="main_menu_start_btn">Anfangen</string>
+    <string name="main_menu_stop_btn">Stop</string>
+    <string name="main_menu_locations_btn">Zeigen die Stelle</string>
+    <string name="main_menu_map_btn">Zeigen on Karte</string>
+    <string name="main_menu_longitude_ind">Longitude: </string>
+    <string name="main_menu_latitude_ind">Latitude: </string>
+    <string name="main_menu_date_ind">Heute ist es: </string>
+    <string name="main_menu_tracking_on">Anfangen ist jetzt!</string>
+    <string name="main_menu_tracking_off">Stop ist jetzt!</string>
+    <string name="main_menu_tracking_enabled">Es ist Anfangen!</string>
+    <string name="main_menu_tracking_disabled">Es ist Stop</string>
+    <string name="main_menu_gps_alert">Zu bekommen Stelle, Sie mussen GPS ermöglichen?</string>
     
+    <!-- about activity's strings -->
+    <string name="about">Info</string>
+    <string name="about_text">Jawohl</string>
+        
+    <!-- operation strings -->    
+    <string name="pending">warten...</string>
+    <string name="proceed">fortfuhren</string>
+    <string name="cancel">cancel</string>
+    <string name="show_on_map">Zeigen on Karte</string>
+    <string name="delete">wegnehmen</string>
+    <string name="locations_operations_alert">wählen die operationen</string>
+    <string name="locations_delete_alert">Jawohl?</string>
+    <string name="database_location_created">Ein neue Stelle macht</string>
+    <string name="database_location_deleted">Stelle abnehmt</string>
+    <string name="operation_cancelled">operationen cancelled</string>
+    <string name="operation_failed">operationen nicht machen...</string>
     
-    <string name="main_menu_start_btn">Jawohl!</string>
-    <string name="main_menu_stop_btn">Jawohl!</string>
-    <string name="main_menu_locations_btn">Jawohl!</string>
-    <string name="main_menu_map_btn">Jawohl!</string>
-    <string name="main_menu_longitude_ind">Jawohl!</string>
-    <string name="main_menu_latitude_ind">Jawohl!</string>
-    <string name="main_menu_date_ind">Jawohl!</string>
-    <string name="main_menu_tracking_on">Jawohl!</string>
-    <string name="main_menu_tracking_off">Jawohl!</string>
-    <string name="main_menu_tracking_enabled">Jawohl!</string>
-    <string name="main_menu_tracking_disabled">Jawohl!</string>
-    <string name="main_menu_gps_alert">Jawohl!</string>
-    
-    <string name="about">Jawohl!</string>
-    <string name="about_text">Jawohl! Jawohl!</string>
-    
-    <string name="pending">Jawohl...</string>
-    <string name="proceed">Jawohl!</string>
-    <string name="cancel">Jawohl!</string>
-    
-    <string name="show_on_map">Jawohl!</string>
-    <string name="delete">Jawohl!</string>
-    <string name="choose_operation">Jawohl!</string>
-    
-    <string name="locations_operations_alert">Jawohl!</string>
-    <string name="locations_delete_alert">Jawohl!</string>
-    
-    <string name="database_location_created">Jawohl!</string>
-    <string name="database_location_deleted">Jawohl!</string>
-    <string name="operation_cancelled">Jawohl!</string>
-    <string name="operation_failed">Jawohl!</string>
+    <!-- map activity's strings -->
+    <string name="show_selected">Zeigen die Stelle</string>
+    <string name="show_all">Zeigen Alle</string>
+    <string name="no_selected_location">Keine Stelle bewählt</string>
 
 </resources>

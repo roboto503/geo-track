@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, MainMenu!</string>
     <string name="app_name">GeoTrack</string>
-    
-    
+        
+    <!-- strings used in main menu -->
     <string name="main_menu_start_btn">Börja</string>
     <string name="main_menu_stop_btn">Sluta</string>
-    <string name="main_menu_locations_btn">Titta</string>
-    <string name="main_menu_map_btn">Karta</string>
-    <string name="main_menu_longitude_ind">en Longitude: </string>
-    <string name="main_menu_latitude_ind">en Latitude: </string>
+    <string name="main_menu_locations_btn">Titta platser</string>
+    <string name="main_menu_map_btn">Kartta</string>
+    <string name="main_menu_longitude_ind">Longitude: </string>
+    <string name="main_menu_latitude_ind">Latitude: </string>
     <string name="main_menu_date_ind">Idag är det: </string>
-    <string name="main_menu_tracking_on">det har börjat</string>
-    <string name="main_menu_tracking_off">det har inte börjat</string>
+    <string name="main_menu_tracking_on">Det har börjat!</string>
+    <string name="main_menu_tracking_off">Det har slutat!</string>
     <string name="main_menu_tracking_enabled">Det är börjat</string>
-    <string name="main_menu_tracking_disabled">Det är inte börjat</string>
-    <string name="main_menu_gps_alert">För at börja du måste GPS? Fortsättä?</string>
+    <string name="main_menu_tracking_disabled">Det är slutat</string>
+    <string name="main_menu_gps_alert">För att börja, du måste GPS. Fortsättä?</string>
     
-    <string name="about">Om det har app</string>
+    <!-- about activity's strings -->
+    <string name="about">Om det här app</string>
     <string name="about_text">juu...</string>
-    
+        
+    <!-- operation strings -->    
     <string name="pending">väntar...</string>
-    <string name="proceed">fortsättä</string>
+    <string name="proceed">fortsätta</string>
     <string name="cancel">cancel</string>
-    
-    <string name="show_on_map">kartta</string>
+    <string name="show_on_map">Kartta</string>
     <string name="delete">delete</string>
-    
     <string name="locations_operations_alert">välja operationen</string>
     <string name="locations_delete_alert">Delete?</string>
-    
     <string name="database_location_created">blob</string>
-    <string name="database_location_deleted">blob blob</string>
-    <string name="operation_cancelled">blobbeti blob</string>
+    <string name="database_location_deleted">blobbeti blob</string>
+    <string name="operation_cancelled">blob</string>
     <string name="operation_failed">blob...</string>
+    
+    <!-- map activity's strings -->
+    <string name="show_selected">Titta väljad plats</string>
+    <string name="show_all">Titta alla</string>
+    <string name="no_selected_location">ingen Plats</string>
 
 </resources>

@@ -6,6 +6,7 @@
 	android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	
+    <!-- indicator text fields: longitude, latitude, date and tracking state icon -->
 	<TextView android:id="@+id/main_menu_lon"
     	android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
 		android:layout_marginRight="10dp"
 		android:layout_gravity="center_horizontal" />
 	
+	<!-- activity button: start, stop, location and map -->
 	<Button
 		android:id="@+id/main_menu_start_btn"
 		android:layout_width="fill_parent"

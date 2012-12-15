@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, MainMenu!</string>
     <string name="app_name">GeoTrack</string>
-    
-    
+        
+    <!-- strings used in main menu -->
     <string name="main_menu_start_btn">Aloita paikannus</string>
     <string name="main_menu_stop_btn">Lopeta paikannus</string>
     <string name="main_menu_locations_btn">Näytä kohteet</string>
-    <string name="main_menu_map_btn">Näytä kartalla</string>
+    <string name="main_menu_map_btn">Näytä kohteet kartalla</string>
     <string name="main_menu_longitude_ind">Longitudi: </string>
     <string name="main_menu_latitude_ind">Latitudi: </string>
-    <string name="main_menu_date_ind">Tänään on: </string>
+    <string name="main_menu_date_ind">Päiväys: </string>
     <string name="main_menu_tracking_on">Paikannus on jo valmiiksi päällä!</string>
-    <string name="main_menu_tracking_off">Paikannus on jo pysäytetty!</string>
+    <string name="main_menu_tracking_off">Paikannus on jo valmiiksi pysäytetty!</string>
     <string name="main_menu_tracking_enabled">Paikannus on päällä!</string>
-    <string name="main_menu_tracking_disabled">Paikannus on pysäytetty!</string>
-    <string name="main_menu_gps_alert">Jotta paikannus olisi mahdollista, on GPS oltava päällä. Jatketaanko?</string>
+    <string name="main_menu_tracking_disabled">Paikannus lopetettu!</string>
+    <string name="main_menu_gps_alert">Jotta paikantaminen olisi mahdollista, on GPS kytkettävä päälle. Jatketaanko?</string>
     
+    <!-- about activity's strings -->
     <string name="about">Tietoja tästä sovelluksesta</string>
-    <string name="about_text">Geotrack pitää kirjaa käyttäjän liikkeistä ja tulostaa ne kartalle. Paina Aloita paikannus aloittaaksesi paikantamisen ja Lopeta paikannus lopettaaksesi. Näytä kohteet näyttää kaikki kohteet, jotka sovellus on kirjannut. Näytä kartalla tulostaa kohteet kartalle.</string>
-    
-    <string name="pending">odotetaan signaalia...</string>
+    <string name="about_text">GeoTracker pitää kirjaa käyttäjänsä liikkeistä ja tulostaa kohteet kartalle. Paina Aloita paikannus aloittaaksesi paikannuksen ja Lopeta paikannus lopettaaksesi. Selaile kohteita painamalla Näytä kohteet tai tulosta ne kartalle painamalla Näytä kohteet kartalla.</string>
+        
+    <!-- operation strings -->    
+    <string name="pending">paikallistaa...</string>
     <string name="proceed">jatka</string>
     <string name="cancel">peruuta</string>
-    
-    <string name="show_on_map">Näytä kohde kartalla</string>
-    <string name="delete">Poista kohde</string>
-    
-    <string name="locations_operations_alert">Valitse toiminto</string>
-    <string name="locations_delete_alert">Olet poistamassa kohdetta tietokannasta. Poistamisen jälkeen kohdetta ei enää voida palauttaa. Jatketaanko?</string>
-    
+    <string name="show_on_map">näytä kartalla</string>
+    <string name="delete">poista kohde</string>
+    <string name="locations_operations_alert">valitse toiminto</string>
+    <string name="locations_delete_alert">Olet poistamassa kohdetta. Poistamisen jälkeen kohteen palautus ei enää ole mahdollista. Jatketaanko?</string>
     <string name="database_location_created">Uusi kohde lisätty tietokantaan</string>
     <string name="database_location_deleted">Kohde poistettu tietokannasta</string>
     <string name="operation_cancelled">Toiminto peruutettu</string>
-    <string name="operation_failed">Toiminto epäonnistui...</string>
+    <string name="operation_failed">toiminto epäonnistui...</string>
+    
+    <!-- map activity's strings -->
+    <string name="show_selected">Näytä valittu kohde</string>
+    <string name="show_all">Näytä kaikki</string>
+    <string name="no_selected_location">Yhtään kohdetta ei ole valittu</string>
 
 </resources>

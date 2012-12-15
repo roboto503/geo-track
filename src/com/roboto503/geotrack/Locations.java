@@ -38,7 +38,7 @@ import com.roboto503.geotrack.db.LocationsDataSource;
 
 public class Locations extends FragmentActivity{
 	
-	/** Database variables */
+	// Database variables
 	private LocationsDataSource ds;
 	private List<GeoTrackerLocation> dbLocationValues;
 	
@@ -46,42 +46,44 @@ public class Locations extends FragmentActivity{
 	private ListView listView;
 	private ImageView backBtn;
 	
-	private long selectedLocation;
-
-	private final int DELETE_ALERT = 0;
-	
-	/** Contextmenu variables*/
+	//Contextmenu variables
 	private final static int SHOW = Menu.FIRST;
 	private final static int DELETE = Menu.FIRST + 1;
 	private final static int CANCEL = Menu.FIRST + 2;
 	
-	/** */
+	//other
+	private long selectedLocation; //stores the id of selected location to make delete or showing location on a map easier
+	private final int DELETE_ALERT = 0; //constant to distinct delete alert
+	
+	
+	/**extended activity method. Creates and initializes the activity*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locations_list);
 		
 		initializeUI();
-		
-		
 	}//onCreate
 	
+	
+	/** initializes the UI items declared in locations_list.xml*/
 	private void initializeUI(){
-		
+		//find views
 		listView = (ListView) findViewById(R.id.list);
 		backBtn = (ImageView) findViewById(R.id.locations_home_btn);
+		
+		//set event handler on home button
 		backBtn.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				//Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-				//startActivity(intent);
+				//finishes activity and return back in a stack (to the MainMenu activity)
 				finish();
 			}
 		});
 		
 		updateListView();
-	}
+	}//initializeUI
+	
 	
 	/** initializes the listview*/
 	private void updateListView(){
@@ -93,33 +95,36 @@ public class Locations extends FragmentActivity{
 		//populate list
 		ArrayList<Map<String, String>> list = createRows(dbLocationValues); //Maps locations from the list in key pair values so they can later be printed for the listview
 		
+		//helps assigning right data to right place on row layout
 		String[] from = {"lonlat","geotag"};
 		int[] to = { R.id.lonlat, R.id.geotag };
-		SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.locations_row, from, to);
 		
+		//creates a new data adapter and sets that to the listview
+		SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.locations_row, from, to);
 		listView.setAdapter(simpleAdapter);
+		
+		//add context menu for listview
 		registerForContextMenu(listView);
 
 		//finally close database
 		ds.closeDb();
-		
-		
 	}//initializeListView
 	
-	/** */
+	
+	/** creates the rows needed for list view*/
 	private ArrayList<Map<String, String>> createRows(List<GeoTrackerLocation> listOfLocations) { //values
 		ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		
 		// loops through given list of locations, and strips location's values (longitude, latitude and date) to the right places in row item using putData method 
 		for(GeoTrackerLocation location : listOfLocations){
-			//list.add(putData("longitude: " + location.getLongitude() + " latitude: " + location.getLatitude(), String.valueOf(location.getId())));
+			
 			list.add(putData("longitude: " + location.getLongitude() + " latitude: " + location.getLatitude(), location.getDate()));
 		}//for
 
 	    return list;
 	}//createRows
 
-	/** */
+	/** helper method for createRows*/
 	private Map<String, String> putData(String lonlat, String geotag) {
 		HashMap<String, String> item = new HashMap<String, String>();
 	    item.put("lonlat", lonlat);
@@ -127,11 +132,14 @@ public class Locations extends FragmentActivity{
 	    return item;
 	}//puData
 	
+	
 	/** creates dialogs*/
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		
+		//create a new builder
 		AlertDialog.Builder builder; 
+		
+		//which alert dialog is needed. Currently only one dialog is possible.
 		switch(id){
 		case DELETE_ALERT:
 			//creates a new dialog
@@ -146,16 +154,18 @@ public class Locations extends FragmentActivity{
 				public void onClick(DialogInterface dialog, int which) {
 					//deletes location from database
 					try{
+						//opens database, deletes location according to the id and closes database
 						ds.openDb();
 						ds.deleteLocation(selectedLocation);
 						ds.closeDb();
 					}catch(Exception e){
+						//inform user that operation failed
 						Toast.makeText(getApplicationContext(), R.string.operation_failed, Toast.LENGTH_SHORT).show();
 					}finally{
-						//simpleAdapter.notifyDataSetChanged();
-						//clear listview and reinitialize database, adapter and listview
+						//clear listview and reinitialize database, adapter and listview; inform user operation succeeded
 						listView.clearChoices();
 						updateListView();
+						Toast.makeText(getApplicationContext(), getResources().getString(R.string.database_location_deleted), Toast.LENGTH_SHORT).show();
 					}
 					return;
 				}//onClick
@@ -164,7 +174,6 @@ public class Locations extends FragmentActivity{
 				//OnClick handler for cancel button in GPS dialog 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(getApplicationContext(), R.string.database_location_deleted, Toast.LENGTH_SHORT).show();
 					return;
 				}
 			});
@@ -178,7 +187,8 @@ public class Locations extends FragmentActivity{
 		return super.onCreateDialog(id);
 	}
 	
-	/** creates contextmenu for the listview*/
+	
+	/** creates contextmenu for the listview (operations for list items)*/
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -189,41 +199,37 @@ public class Locations extends FragmentActivity{
 		menu.add(0, CANCEL, 0, getResources().getString(R.string.cancel));
 	}
 	
+	
+	/** event handlers for list item operations*/
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		//info variable that tells, which item was clicked
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		
+		//update helper variable, which item is affected
 		selectedLocation = dbLocationValues.get(info.position).getId();
+		Intent intent;
+		
+		//which operation is wanted for selected item
 		switch(item.getItemId()){
 		case SHOW:
-			//Intent -> id mukaan
+			//create a new intent, add the id of a selected location to intent and start the MyMap activity
+			intent = new Intent(this, MyMap.class);
+			intent.putExtra("LOCATION_ID", selectedLocation);
+			startActivity(intent);
 			break;
 		case DELETE:
+			//show delete dialog to the user
 			onCreateDialog(DELETE_ALERT);
 			break;
 		case CANCEL:
+			//don't do a thing
 			break;
 		default:
+			//don't do a thing
 			break;
 		}
 		return super.onContextItemSelected(item);
-	}
-	
-	/*
-	private Map<String, String> putData(String lonlat, String geotag) {
-		HashMap<String, String> item = new HashMap<String, String>();
-	    item.put("lonlat", lonlat);
-	    item.put("geotag", geotag);
-	    return item;
-	}//puData
-	*/
-
-	/*
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		//String item = (String) getListAdapter().getItem(position);
-		Toast.makeText(this,"selected " + id, Toast.LENGTH_SHORT).show();
-	}//onListItemClick
-	 */
-	
-	
+	}//onContextItemSelected
+		
 }

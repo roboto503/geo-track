@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 import com.roboto503.geotrack.db.GeoTrackerLocation;
 import com.roboto503.geotrack.db.LocationsDataSource;
-import com.roboto503.geotrack.Map;
+import com.roboto503.geotrack.MyMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -64,13 +64,11 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
         
-        //initialize date
+        //initialize date, UI and GPS
         date = date();
         
-        //initialize UI
         initializeUI();
         
-        //initialize GPS
         initializeGPS();
         
        // open database 
@@ -112,6 +110,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	Time today = new Time(Time.getCurrentTimezone());
     	today.setToNow();
     	
+    	//create date string
     	StringBuilder sb = new StringBuilder();
     	sb.append(getResources().getString(R.string.main_menu_date_ind));
     	sb.append(today.monthDay);
@@ -119,19 +118,20 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
     	sb.append(today.month);
     	sb.append("/");
     	sb.append(today.year);
-    	Log.i("DATE", sb.toString());
     	return sb.toString();
     }
 
-    /** */
+    /** Initializes GPS */
     private void initializeGPS(){
     	locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	    Criteria criteria = new Criteria();
 	    provider = locManager.getBestProvider(criteria, false);
-	    //ask user to turn on gps or mobile network
+	    
+	    //ask user to turn on gps or mobile network so that tracking is possible
 	    if(!locManager.isProviderEnabled(provider)){
 	    	onCreateDialog(ACTIVATE_GPS_ALERT);
 	    }
+	    
 	    isEnabled=true;
 	    updateUI();
     }//initializeGPS
@@ -156,12 +156,13 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 			break;
 		case R.id.main_menu_map_btn:
 			//launch map activity
-			intent = new Intent(this, Map.class);
+			intent = new Intent(this, MyMap.class);
 			startActivity(intent);
 			break;
 		}//switch	
 	}//onClick
 	
+	/** check the status of tracking*/
 	private void checkTrackingStatus(){
 		if(isEnabled){
 			//if tracking on, stop tracking, remove location updates and update UI
@@ -177,7 +178,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		}
 	}//checkTrackingStatus 
 	
-	/***/
+	/** updateUI to inform user whether tracking is on or off*/
 	private void updateUI(){
 		if(isEnabled){
 			stop.setEnabled(true);
@@ -190,7 +191,7 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		}
 	}//updateUI
 	
-	/** */
+	/** event handlers for menu items*/
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// which option in an options menu was selected 
@@ -238,30 +239,33 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		isEnabled = false;
 	}
 
-	/** */
+	/** When location is changed, create a new database entry and update indicators*/
 	@Override
 	public void onLocationChanged(Location location) {
 	    //insert location into the database
-	    ds.createLocation(String.valueOf(location.getLongitude()), String.valueOf(location.getLatitude()), date);
-	    //ds.createLocation(String.valueOf(decFormat.format(location.getLongitude())), String.valueOf(decFormat.format(location.getLatitude())), date);
-		//Toast.makeText(this, "lon: " + String.valueOf(location.getLongitude()) + " lat: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
+	    ds.createLocation(String.valueOf(location.getLongitude()), String.valueOf(location.getLatitude()), date); //for more precise location
+	    //ds.createLocation(String.valueOf(decFormat.format(location.getLongitude())), String.valueOf(decFormat.format(location.getLatitude())), date); //I think three decimals is enough 
+	    
+	    //update location indicators
 	    lonInd.setText(getResources().getString(R.string.main_menu_longitude_ind) + decFormat.format(location.getLongitude()));
 	    latInd.setText(getResources().getString(R.string.main_menu_latitude_ind) + decFormat.format(location.getLatitude()));
-	    Log.i("longitude", String.valueOf(decFormat.format(location.getLongitude())));
 	}
 
+	/** implemented abstract method*/
 	@Override
 	public void onProviderDisabled(String provider) {
 		// 
 		Toast.makeText(this, "The provider is disabled: " + provider, Toast.LENGTH_SHORT).show();
 	}//onProviderDisabled
 
+	/** implemented abstract method*/
 	@Override
 	public void onProviderEnabled(String provider) {
 		// let the user know that provider is enabled
 		Toast.makeText(this, "New provider is enabled: " + provider, Toast.LENGTH_SHORT).show();
 	}//onProviderEnabled
 
+	/** implemented abstract method*/
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
@@ -312,6 +316,5 @@ public class MainMenu extends Activity implements OnClickListener, LocationListe
 		}
 		return super.onCreateDialog(id);
 	}//onCreateDialog
-	
 	
 }

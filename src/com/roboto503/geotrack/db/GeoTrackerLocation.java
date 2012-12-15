@@ -2,6 +2,7 @@ package com.roboto503.geotrack.db;
 
 public class GeoTrackerLocation {
 	
+	//location field variables
 	private long id;
 	private String longitude;
 	private String latitude;

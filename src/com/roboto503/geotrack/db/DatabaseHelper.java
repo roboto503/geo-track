@@ -23,24 +23,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String DATABASE_DROP = "drop table if exists " + TABLE_LOCATION;
 	
 	
+	/** creates the database helper*/
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}//DatabaseHelper
 
+	
+	/** creates the database if not exists*/
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//executes database create sql statement
-		db.execSQL(DATABASE_CREATE);
-		
+		db.execSQL(DATABASE_CREATE);	
 	}//onCreate
 
+	
+	/** upgrades existing database if necessary*/
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		//if database is upgraded, the existing database will be destroyed along old data
 		db.execSQL(DATABASE_DROP);
 		//recreate new database
 		onCreate(db);
-		
 	}//onUpgrade
 
 }

@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".About" android:label="@string/about" android:theme="@android:style/Theme.Dialog"></activity>
         <activity android:name=".Locations" android:theme="@android:style/Theme.NoTitleBar"></activity>
-        <activity android:name=".Map" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".MyMap" android:theme="@android:style/Theme.NoTitleBar"></activity>
     	<service android:name=".GPSService"></service>
     </application>
 
